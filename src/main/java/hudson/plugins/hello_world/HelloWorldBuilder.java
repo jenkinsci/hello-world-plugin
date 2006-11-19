@@ -92,7 +92,7 @@ public class HelloWorldBuilder extends Builder {
             return "Say hello world";
         }
 
-        public boolean configure(HttpServletRequest req) throws FormException {
+        public boolean configure(StaplerRequest req) throws FormException {
             // to persist global configuration information,
             // set that to properties and call save().
             useFrench = req.getParameter("hello_world.useFrench")!=null;
