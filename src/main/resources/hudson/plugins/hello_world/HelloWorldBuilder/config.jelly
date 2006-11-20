@@ -11,6 +11,6 @@
       the form is rendered, but since this is EL, in that case this expression
       evaluates to null, and you'll get an empty text box, which is just what we want.
     -->
-    <f:textbox name="hello_world.name" value="${builder.name}" />
+    <f:textbox name="hello_world.name" value="${instance.name}" />
 	</f:entry>
 </j:jelly>
