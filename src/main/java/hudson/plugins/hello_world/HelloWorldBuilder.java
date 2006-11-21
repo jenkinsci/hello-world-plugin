@@ -7,8 +7,6 @@ import hudson.model.Descriptor;
 import hudson.tasks.Builder;
 import org.kohsuke.stapler.StaplerRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Sample {@link Builder}.
  *
@@ -83,6 +81,7 @@ public class HelloWorldBuilder extends Builder {
 
         DescriptorImpl() {
             super(HelloWorldBuilder.class);
+            load();
         }
 
         /**
