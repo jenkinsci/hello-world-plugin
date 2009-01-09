@@ -28,7 +28,7 @@ public class HelloWorldBuilder extends Builder {
 
     private final String name;
 
-    HelloWorldBuilder(String name) {
+    public HelloWorldBuilder(String name) {
         this.name = name;
     }
 
