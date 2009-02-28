@@ -1,11 +1,18 @@
 package hudson.plugins.hello_world;
 
 import hudson.Launcher;
+import hudson.Extension;
 import hudson.model.Build;
 import hudson.model.BuildListener;
-import hudson.model.Descriptor;
+import hudson.model.AbstractBuild;
 import hudson.tasks.Builder;
+import hudson.tasks.BuildStepDescriptor;
 import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.DataBoundConstructor;
+
+import javax.management.Descriptor;
+
+import net.sf.json.JSONObject;
 
 /**
  * Sample {@link Builder}.
@@ -28,6 +35,11 @@ public class HelloWorldBuilder extends Builder {
 
     private final String name;
 
+    /**
+     * This annotation tells Hudson to call this constructor, with
+     * values from the configuration form page with matching parameter names.
+     */
+    @DataBoundConstructor
     public HelloWorldBuilder(String name) {
         this.name = name;
     }
@@ -39,37 +51,46 @@ public class HelloWorldBuilder extends Builder {
         return name;
     }
 
-    public boolean perform(Build build, Launcher launcher, BuildListener listener) {
+    @Override
+    public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         // this is where you 'build' the project
         // since this is a dummy, we just say 'hello world' and call that a build
 
         // this also shows how you can consult the global configuration of the builder
-        if(DESCRIPTOR.useFrench())
+        if(getDescriptor().useFrench())
             listener.getLogger().println("Bonjour, "+name+"!");
         else
             listener.getLogger().println("Hello, "+name+"!");
         return true;
     }
 
-    public Descriptor<Builder> getDescriptor() {
+    /**
+     * Hudson defines a method {@link Builder#getDescriptor()}, which
+     * returns the corresponding {@link Descriptor} object.
+     *
+     * Since we know that it's actually {@link DescriptorImpl}, override
+     * the method and give a better return type, so that we can access
+     * {@link DescriptorImpl} methods more easily.
+     *
+     * This is not necessary, but just a coding style preference.
+     */
+    @Override
+    public DescriptorImpl getDescriptor() {
         // see Descriptor javadoc for more about what a descriptor is.
-        return DESCRIPTOR;
+        return (DescriptorImpl)super.getDescriptor();
     }
 
     /**
-     * Descriptor should be singleton.
-     */
-    public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
-
-    /**
-     * Descriptor for {@link HelloWorldBuilder}. Used as a singleton.
+     * Descriptor for {@link HelloWorldBuilder}.
      * The class is marked as public so that it can be accessed from views.
      *
      * <p>
      * See <tt>views/hudson/plugins/hello_world/HelloWorldBuilder/*.jelly</tt>
      * for the actual HTML fragment for the configuration screen.
      */
-    public static final class DescriptorImpl extends Descriptor<Builder> {
+    // this annotation tells Hudson that this is the implementation of an extension point
+    @Extension
+    public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
         /**
          * To persist global configuration information,
          * simply store it in a field and call save().
@@ -79,24 +100,33 @@ public class HelloWorldBuilder extends Builder {
          */
         private boolean useFrench;
 
-        DescriptorImpl() {
-            super(HelloWorldBuilder.class);
+        public DescriptorImpl() {
             load();
         }
 
         /**
          * This human readable name is used in the configuration screen.
          */
+        @Override
         public String getDisplayName() {
             return "Say hello world";
         }
 
-        public boolean configure(StaplerRequest req) throws FormException {
+        /**
+         * Applicable to any kind of project.
+         */
+        @Override
+        public boolean isApplicable(Class type) {
+            return true;
+        }
+
+        @Override
+        public boolean configure(StaplerRequest staplerRequest, JSONObject json) throws FormException {
             // to persist global configuration information,
             // set that to properties and call save().
-            useFrench = req.getParameter("hello_world.useFrench")!=null;
+            useFrench = json.getBoolean("useFrench");
             save();
-            return super.configure(req);
+            return true; // indicate that everything is good so far
         }
 
         /**
@@ -104,14 +134,6 @@ public class HelloWorldBuilder extends Builder {
          */
         public boolean useFrench() {
             return useFrench;
-        }
-
-        /**
-         * Creates a new instance of {@link HelloWorldBuilder} from a submitted form.
-         */
-        public HelloWorldBuilder newInstance(StaplerRequest req) throws FormException {
-            // see config.jelly and you'll find "hello_world.name" form entry.
-            return new HelloWorldBuilder(req.getParameter("hello_world.name"));
         }
     }
 }
