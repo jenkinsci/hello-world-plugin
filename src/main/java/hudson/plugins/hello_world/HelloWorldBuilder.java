@@ -58,7 +58,7 @@ public class HelloWorldBuilder extends Builder {
 
         // this also shows how you can consult the global configuration of the builder
         if(getDescriptor().useFrench())
-            listener.getLogger().println("Bonjour, "+name+"!");
+            listener.getLogger().println("Bonjour Bonjour Bonjour, "+name+"!");
         else
             listener.getLogger().println("Hello, "+name+"!");
         return true;
