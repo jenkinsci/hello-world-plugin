@@ -75,6 +75,7 @@ public class HelloWorldBuilder extends Builder {
      * {@link DescriptorImpl} methods more easily.
      *
      * This is not necessary, but just a coding style preference.
+     * @return descriptor for this builder
      */
     @Override
     public DescriptorImpl getDescriptor() {
@@ -108,6 +109,7 @@ public class HelloWorldBuilder extends Builder {
 
         /**
          * This human readable name is used in the configuration screen.
+         * @return display name for configuration screen
          */
         @Override
         public String getDisplayName() {
@@ -116,6 +118,8 @@ public class HelloWorldBuilder extends Builder {
 
         /**
          * Applicable to any kind of project.
+         * @param type class to be tested for applicability
+         * @return true if this builder can be applied to a project of class type
          */
         @Override
         public boolean isApplicable(Class type) {
