@@ -1,16 +1,27 @@
 package org.jenkinsci.plugins.hello;
 
+import hudson.model.FreeStyleBuild;
+import hudson.model.FreeStyleProject;
+import hudson.tasks.BuildStepDescriptor;
 import static org.hamcrest.CoreMatchers.*;
+import org.hamcrest.core.IsInstanceOf;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.WithoutJenkins;
 
 /**
  * Test the HelloWorldBuilder.
+ *
  * @author Mark Waite
  */
 public class HelloWorldBuilderTest {
+
+    @Rule
+    public JenkinsRule jenkins = new JenkinsRule();
 
     private HelloWorldBuilder builder = null;
     private String name = null;
@@ -25,16 +36,29 @@ public class HelloWorldBuilderTest {
     }
 
     @Test
+    @WithoutJenkins // This test does not need the JenkinsRule instance
     public void testGetName() {
         assertThat(builder.getName(), is(name));
     }
 
     @Test
     public void testPerform() {
+        // Tested by testFreeStyleProject
+    }
+
+    @Test
+    public void testFreeStyleProject() throws Exception {
+        FreeStyleProject project = jenkins.createFreeStyleProject();
+        project.getBuildersList().add(builder);
+        FreeStyleBuild completedBuild = jenkins.assertBuildStatusSuccess(project.scheduleBuild2(0));
+        String helloString = "Hello, " + name + "!";
+        jenkins.assertLogContains(helloString, completedBuild);
     }
 
     @Test
     public void testGetDescriptor() {
+        assertThat(builder.getDescriptor(), IsInstanceOf.instanceOf(BuildStepDescriptor.class));
+        assertThat(builder.getDescriptor().getDisplayName(), is("Say hello world"));
     }
 
 }
