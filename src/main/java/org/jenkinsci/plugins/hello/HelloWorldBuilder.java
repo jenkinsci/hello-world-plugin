@@ -1,4 +1,4 @@
-package hudson.plugins.hello_world;
+package org.jenkinsci.plugins.hello;
 
 import hudson.Launcher;
 import hudson.Extension;
