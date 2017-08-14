@@ -2,11 +2,14 @@ package org.jenkinsci.plugins.hello;
 
 import hudson.model.FreeStyleBuild;
 import hudson.model.FreeStyleProject;
+import hudson.model.Label;
 import hudson.tasks.BuildStepDescriptor;
 import static org.hamcrest.CoreMatchers.*;
 import org.hamcrest.core.IsInstanceOf;
+import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
+import org.jenkinsci.plugins.workflow.job.WorkflowJob;
+import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +47,7 @@ public class HelloWorldBuilderTest {
     @Test
     public void testPerform() {
         // Tested by testFreeStyleProject
+        // Tested by testScriptedPipeline
     }
 
     @Test
@@ -53,6 +57,21 @@ public class HelloWorldBuilderTest {
         FreeStyleBuild completedBuild = jenkins.assertBuildStatusSuccess(project.scheduleBuild2(0));
         String helloString = "Hello, " + name + "!";
         jenkins.assertLogContains(helloString, completedBuild);
+    }
+
+    @Test
+    public void testScriptedPipeline() throws Exception {
+        String agentLabel = "my-agent";
+        jenkins.createOnlineSlave(Label.get(agentLabel));
+        WorkflowJob job = jenkins.createProject(WorkflowJob.class, "test-perform-pipeline");
+        String pipelineScript
+                = "node {\n"
+                + "  step([$class: 'HelloWorldBuilder', name: '" + name + "'])"
+                + "}";
+        job.setDefinition(new CpsFlowDefinition(pipelineScript, true));
+        WorkflowRun completedBuild = jenkins.assertBuildStatusSuccess(job.scheduleBuild2(0));
+        String expectedString = "Hello, " + name + "!";
+        jenkins.assertLogContains(expectedString, completedBuild);
     }
 
     @Test
