@@ -5,12 +5,11 @@ import hudson.Extension;
 import hudson.model.Build;
 import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
+import hudson.model.Descriptor;
 import hudson.tasks.Builder;
 import hudson.tasks.BuildStepDescriptor;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.DataBoundConstructor;
-
-import javax.management.Descriptor;
 
 import net.sf.json.JSONObject;
 
