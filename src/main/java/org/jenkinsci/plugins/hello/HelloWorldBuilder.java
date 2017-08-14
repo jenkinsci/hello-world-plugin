@@ -27,7 +27,7 @@ import net.sf.json.JSONObject;
  *
  * <p>
  * When a build is performed, the {@link #perform(Build, Launcher, BuildListener)} method
- * will be invoked. 
+ * will be invoked.
  *
  * @author Kohsuke Kawaguchi
  */
@@ -38,6 +38,8 @@ public class HelloWorldBuilder extends Builder {
     /**
      * This annotation tells Hudson to call this constructor, with
      * values from the configuration form page with matching parameter names.
+     *
+     * @param name name to be greeted in the console log
      */
     @DataBoundConstructor
     public HelloWorldBuilder(String name) {
@@ -46,6 +48,7 @@ public class HelloWorldBuilder extends Builder {
 
     /**
      * We'll use this from the <tt>config.jelly</tt>.
+     * @return name to include in greeting
      */
     public String getName() {
         return name;
@@ -131,6 +134,7 @@ public class HelloWorldBuilder extends Builder {
 
         /**
          * This method returns true if the global configuration says we should speak French.
+         * @return true if logged message should be in French
          */
         public boolean useFrench() {
             return useFrench;
