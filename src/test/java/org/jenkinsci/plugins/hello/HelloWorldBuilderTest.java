@@ -4,6 +4,7 @@ import hudson.model.FreeStyleBuild;
 import hudson.model.FreeStyleProject;
 import hudson.model.Label;
 import hudson.tasks.BuildStepDescriptor;
+import hudson.tasks.Builder;
 import static org.hamcrest.CoreMatchers.*;
 import org.hamcrest.core.IsInstanceOf;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
@@ -95,6 +96,11 @@ public class HelloWorldBuilderTest {
         assertThat(builder.getDescriptor().getDisplayName(), is("Say hello world"));
     }
 
+    @Test
+    public void testDescriptorIsApplicable() {
+        BuildStepDescriptor<Builder> descriptor = builder.getDescriptor();
+        assertThat(descriptor.isApplicable(FreeStyleProject.class), is(true));
+    }
 }
 /*
  * The MIT License
