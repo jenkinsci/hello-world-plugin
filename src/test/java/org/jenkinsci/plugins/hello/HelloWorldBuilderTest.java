@@ -108,6 +108,12 @@ public class HelloWorldBuilderTest {
         HelloWorldBuilder after = jenkins.configRoundtrip(builder);
         jenkins.assertEqualDataBoundBeans(builder, after);
     }
+
+    /* Confirm job configuration is unharmed by a round trip through UI */
+    @Test
+    public void testSystemConfigRoundTrip() throws Exception {
+        jenkins.configRoundtrip();
+    }
 }
 /*
  * The MIT License
