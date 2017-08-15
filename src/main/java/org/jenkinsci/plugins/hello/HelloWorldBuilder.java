@@ -16,6 +16,7 @@ import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import net.sf.json.JSONObject;
+import org.jenkinsci.Symbol;
 
 /**
  * Sample {@link Builder}.
@@ -98,6 +99,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      */
     // this annotation tells Hudson that this is the implementation of an extension point
     @Extension
+    @Symbol("helloWorld")
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
         /**

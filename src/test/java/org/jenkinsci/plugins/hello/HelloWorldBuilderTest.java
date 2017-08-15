@@ -75,6 +75,21 @@ public class HelloWorldBuilderTest {
     }
 
     @Test
+    public void testScriptedPipelineUseSymbol() throws Exception {
+        String agentLabel = "my-agent";
+        jenkins.createOnlineSlave(Label.get(agentLabel));
+        WorkflowJob job = jenkins.createProject(WorkflowJob.class, "test-scripted-pipeline-use-symbol");
+        String pipelineScript
+                = "node {\n"
+                + "  helloWorld '" + name + "'\n"
+                + "}";
+        job.setDefinition(new CpsFlowDefinition(pipelineScript, true));
+        WorkflowRun completedBuild = jenkins.assertBuildStatusSuccess(job.scheduleBuild2(0));
+        String expectedString = "Hello, " + name + "!";
+        jenkins.assertLogContains(expectedString, completedBuild);
+    }
+
+    @Test
     public void testGetDescriptor() {
         assertThat(builder.getDescriptor(), IsInstanceOf.instanceOf(BuildStepDescriptor.class));
         assertThat(builder.getDescriptor().getDisplayName(), is("Say hello world"));
