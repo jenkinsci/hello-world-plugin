@@ -39,7 +39,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
     private final String name;
 
     /**
-     * This annotation tells Hudson to call this constructor, with values from
+     * This annotation tells Jenkins to call this constructor, with values from
      * the configuration form page with matching parameter names.
      *
      * @param name name to be greeted in the console log
@@ -72,7 +72,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
     }
 
     /**
-     * Hudson defines a method {@link Builder#getDescriptor()}, which returns
+     * Jenkins defines a method {@link Builder#getDescriptor()}, which returns
      * the corresponding {@link Descriptor} object.
      *
      * Since we know that it's actually {@link DescriptorImpl}, override the
@@ -94,10 +94,10 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      * so that it can be accessed from views.
      *
      * <p>
-     * See <tt>views/hudson/plugins/hello_world/HelloWorldBuilder/*.jelly</tt>
+     * See <tt>src/main/resources/org/jenkinsci/plugins/hello/HelloWorldBuilder/*.jelly</tt>
      * for the actual HTML fragment for the configuration screen.
      */
-    // this annotation tells Hudson that this is the implementation of an extension point
+    // this annotation tells Jenkins that this is the implementation of an extension point
     @Extension
     @Symbol("helloWorld")
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {

@@ -11,9 +11,9 @@
 
       For this to work correctly, you need to have:
 
-      1) getName() or the public name field so that Hudson can retrieve a value
+      1) getName() or the public name field so that Jenkins can retrieve a value
       2) The 'name' parameter in the constructor marked by @DataBoundConstructor,
-         so that Hudson can create the new HelloWorldBuilder with the user-configured value
+         so that Jenkins can create the new HelloWorldBuilder with the user-configured value
     -->
     <f:textbox />
 	</f:entry>
