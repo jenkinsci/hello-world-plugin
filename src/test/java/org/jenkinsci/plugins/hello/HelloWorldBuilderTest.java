@@ -101,6 +101,13 @@ public class HelloWorldBuilderTest {
         BuildStepDescriptor<Builder> descriptor = builder.getDescriptor();
         assertThat(descriptor.isApplicable(FreeStyleProject.class), is(true));
     }
+
+    /* Confirm job configuration is unharmed by a round trip through UI */
+    @Test
+    public void testJobConfigRoundTrip() throws Exception {
+        HelloWorldBuilder after = jenkins.configRoundtrip(builder);
+        jenkins.assertEqualDataBoundBeans(builder, after);
+    }
 }
 /*
  * The MIT License
