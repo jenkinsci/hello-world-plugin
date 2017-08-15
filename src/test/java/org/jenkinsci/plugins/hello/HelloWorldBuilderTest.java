@@ -114,6 +114,23 @@ public class HelloWorldBuilderTest {
     public void testSystemConfigRoundTrip() throws Exception {
         jenkins.configRoundtrip();
     }
+
+    @Test
+    public void testSystemConfigDefault() throws Exception {
+        assertThat(builder.getDescriptor().useFrench(), is(false));
+    }
+
+    @Test
+    public void testSystemConfigFrenchRoundTrip() throws Exception {
+        builder.getDescriptor().setUseFrench(true);
+        jenkins.configRoundtrip();
+        assertThat(builder.getDescriptor().useFrench(), is(true));
+        FreeStyleProject project = jenkins.createFreeStyleProject();
+        project.getBuildersList().add(builder);
+        FreeStyleBuild completedBuild = jenkins.assertBuildStatusSuccess(project.scheduleBuild2(0));
+        String helloString = "Bonjour, " + name + "!";
+        jenkins.assertLogContains(helloString, completedBuild);
+    }
 }
 /*
  * The MIT License

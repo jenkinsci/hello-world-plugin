@@ -94,7 +94,8 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      * so that it can be accessed from views.
      *
      * <p>
-     * See <tt>src/main/resources/org/jenkinsci/plugins/hello/HelloWorldBuilder/*.jelly</tt>
+     * See
+     * <tt>src/main/resources/org/jenkinsci/plugins/hello/HelloWorldBuilder/*.jelly</tt>
      * for the actual HTML fragment for the configuration screen.
      */
     // this annotation tells Jenkins that this is the implementation of an extension point
@@ -154,6 +155,11 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          */
         public boolean useFrench() {
             return useFrench;
+        }
+
+        /* Intentionally package protected for testing */
+        void setUseFrench(boolean value) {
+            useFrench = value;
         }
     }
 }
