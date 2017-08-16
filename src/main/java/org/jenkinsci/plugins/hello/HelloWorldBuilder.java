@@ -117,6 +117,29 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         }
 
         /**
+         * Performs on-the-fly validation of the form field 'name'.
+         *
+         * @param value
+         *      This parameter receives the value that the user has typed.
+         * @return
+         *      Indicates the outcome of the validation. This is sent to the browser.
+         *      <p>
+         *      Note that returning {@link FormValidation#error(String)} does not
+         *      prevent the form from being saved. It just means that a message
+         *      will be displayed to the user.
+         * @throws java.io.IOException on input / output error
+         * @throws javax.servlet.ServletException on servlet exception
+         */
+        public FormValidation doCheckName(@QueryParameter String value)
+                throws IOException, ServletException {
+            if (value.length() == 0)
+                return FormValidation.error("Please set a name");
+            if (value.length() < 4)
+                return FormValidation.warning("Isn't the name too short?");
+            return FormValidation.ok();
+        }
+
+        /**
          * This human readable name is used in the configuration screen.
          *
          * @return display name for configuration screen
