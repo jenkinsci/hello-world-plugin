@@ -8,7 +8,7 @@
 // Allow failing tests to retry execution
 // Run findbugs and save the output, mark unstable on any findbugs warning
 buildPlugin(jenkinsVersions: [null, '2.60.3'],
-            findbugs: [run:true, archive:true],
+            findbugs: [run:true, archive:true, unstableTotalAll: '0'],
             failFast: false
            )
 
