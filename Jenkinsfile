@@ -6,4 +6,7 @@
 
 // Test plugin compatbility to latest Jenkins LTS
 // Allow failing tests to retry execution
-buildPlugin(jenkinsVersions: [null, '2.60.2'], failFast: false)
+buildPlugin(jenkinsVersions: [null, '2.60.3'], failFast: false)
+
+// See https://github.com/jenkins-infra/pipeline-library/blob/master/README.adoc
+// for detailed description of the arguments available with buildPlugin
