@@ -93,7 +93,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      * @return descriptor for this builder
      */
     @Override
-    public DescriptorImpl getDescriptor() {
+    public final DescriptorImpl getDescriptor() {
         // see Descriptor javadoc for more about what a descriptor is.
         return (DescriptorImpl) super.getDescriptor();
     }
