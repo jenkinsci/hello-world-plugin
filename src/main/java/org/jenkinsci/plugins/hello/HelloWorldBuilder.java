@@ -143,7 +143,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          * @throws java.io.IOException on input / output error
          * @throws javax.servlet.ServletException on servlet exception
          */
-        public FormValidation doCheckName(@QueryParameter String value)
+        public FormValidation doCheckName(@QueryParameter final String value)
                 throws IOException, ServletException {
             if (value.length() == 0)
                 return FormValidation.error("Please set a name");
