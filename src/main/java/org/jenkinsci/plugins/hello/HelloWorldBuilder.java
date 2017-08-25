@@ -110,7 +110,8 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
     // @Symbol annotation registers a symbol with pipeline
     @Extension
     @Symbol("helloWorld")
-    public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
+    public static final class DescriptorImpl
+        extends BuildStepDescriptor<Builder> {
 
         /**
          * To persist global configuration information, simply store it in a
