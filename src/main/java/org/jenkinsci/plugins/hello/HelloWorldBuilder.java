@@ -122,6 +122,9 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          */
         private boolean useFrench;
 
+        /**
+         * Constructor for this descriptor.
+         */
         public DescriptorImpl() {
             load();
         }
@@ -132,7 +135,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          * @param value
          *      This parameter receives the value that the user has typed.
          * @return
-         *      Indicates the outcome of the validation. This is sent to the browser.
+         *      outcome of the validation. This is sent to the browser.
          *      <p>
          *      Note that returning {@link FormValidation#error(String)} does not
          *      prevent the form from being saved. It just means that a message
