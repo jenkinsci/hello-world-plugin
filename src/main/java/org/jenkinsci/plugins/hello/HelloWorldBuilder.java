@@ -32,7 +32,8 @@ import org.kohsuke.stapler.StaplerRequest;
  *
  * <p>
  * When a build is performed, the
- * {@link #perform(Run, FilePath, Launcher, TaskListener)} method will be invoked.
+ * {@link #perform(Run, FilePath, Launcher, TaskListener)} method will
+ * be invoked.
  *
  * @author Kohsuke Kawaguchi
  */
