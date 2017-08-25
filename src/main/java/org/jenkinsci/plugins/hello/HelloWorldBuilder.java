@@ -8,7 +8,6 @@ import net.sf.json.JSONObject;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
-import hudson.model.Descriptor;
 import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.tasks.BuildStepDescriptor;
@@ -82,7 +81,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
     /**
      * Jenkins defines a method {@link Builder#getDescriptor()}, which returns
-     * the corresponding {@link Descriptor} object.
+     * the corresponding {@link hudson.model.Descriptor} object.
      *
      * Since we know that it's actually {@link DescriptorImpl}, override the
      * method and give a better return type, so that we can access
