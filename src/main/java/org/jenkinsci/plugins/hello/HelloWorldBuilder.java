@@ -104,10 +104,11 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      *
      * <p>
      * See
-     * <tt>src/main/resources/org/jenkinsci/plugins/hello/HelloWorldBuilder/*.jelly</tt>
-     * for the actual HTML fragment for the configuration screen.
+     * <tt>src/main/resources/org/jenkinsci/plugins/hello/HelloWorldBuilder/</tt>
+     * for the actual HTML fragments for the configuration screen.
      */
-    // this annotation tells Jenkins that this is the implementation of an extension point
+    // @Extension annotation identifies this is an extension point implementation
+    // @Symbol annotation registers a symbol with pipeline
     @Extension
     @Symbol("helloWorld")
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
