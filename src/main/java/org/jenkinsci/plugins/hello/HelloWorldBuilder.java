@@ -58,7 +58,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      *
      * @return name to include in greeting
      */
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
