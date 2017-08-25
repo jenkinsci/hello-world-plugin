@@ -49,7 +49,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      * @param name name to be greeted in the console log
      */
     @DataBoundConstructor
-    public HelloWorldBuilder(String name) {
+    public HelloWorldBuilder(final String name) {
         this.name = name;
     }
 
