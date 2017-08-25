@@ -121,6 +121,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          * If you don't want fields to be persisted, use <tt>transient</tt>.
          */
         private boolean useFrench;
+        private final int NAME_LENGTH_WARNING = 4;
 
         /**
          * Constructor for this descriptor.
@@ -148,7 +149,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
             if (value.length() == 0) {
                 return FormValidation.error("Please set a name");
             }
-            if (value.length() < 4) {
+            if (value.length() < NAME_LENGTH_WARNING) {
                 return FormValidation.warning("Isn't the name too short?");
             }
             return FormValidation.ok();
