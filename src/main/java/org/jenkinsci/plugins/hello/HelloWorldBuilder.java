@@ -8,8 +8,6 @@ import net.sf.json.JSONObject;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
-import hudson.model.Build;
-import hudson.model.BuildListener;
 import hudson.model.Descriptor;
 import hudson.model.Run;
 import hudson.model.TaskListener;
@@ -34,7 +32,7 @@ import org.kohsuke.stapler.StaplerRequest;
  *
  * <p>
  * When a build is performed, the
- * {@link #perform(Build, Launcher, BuildListener)} method will be invoked.
+ * {@link #perform(Run, FilePath, Launcher, TaskListener)} method will be invoked.
  *
  * @author Kohsuke Kawaguchi
  */
