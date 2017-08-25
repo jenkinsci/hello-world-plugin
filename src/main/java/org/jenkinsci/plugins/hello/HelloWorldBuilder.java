@@ -63,15 +63,16 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
     }
 
     @Override
-    public final void perform(Run<?, ?> run,
-                              FilePath workspace,
-                              Launcher launcher,
-                              TaskListener listener)
+    public final void perform(final Run<?, ?> run,
+                              final FilePath workspace,
+                              final Launcher launcher,
+                              final TaskListener listener)
         throws InterruptedException, IOException {
         // this is where you 'build' the project since this is a
         // dummy, we just say 'hello world' and call that a build
 
-        // this also shows how you can consult the global configuration of the builder
+        // this also shows how you can consult the global
+        // configuration of the builder
         if (getDescriptor().useFrench()) {
             listener.getLogger().println("Bonjour, " + name + "!");
         } else {
