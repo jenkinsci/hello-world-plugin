@@ -145,10 +145,12 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          */
         public FormValidation doCheckName(@QueryParameter final String value)
                 throws IOException, ServletException {
-            if (value.length() == 0)
+            if (value.length() == 0) {
                 return FormValidation.error("Please set a name");
-            if (value.length() < 4)
+            }
+            if (value.length() < 4) {
                 return FormValidation.warning("Isn't the name too short?");
+            }
             return FormValidation.ok();
         }
 
