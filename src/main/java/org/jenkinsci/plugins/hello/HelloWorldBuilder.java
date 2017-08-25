@@ -176,7 +176,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          * type
          */
         @Override
-        public boolean isApplicable(Class type) {
+        public boolean isApplicable(final Class type) {
             return true;
         }
 
