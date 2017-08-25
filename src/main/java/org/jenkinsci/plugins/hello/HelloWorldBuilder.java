@@ -121,7 +121,10 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          * If you don't want fields to be persisted, use <tt>transient</tt>.
          */
         private boolean useFrench;
-        private final int NAME_LENGTH_WARNING = 4;
+
+        /** Warn if user provided name is shorter than NAME_LENGTH_WARNING.
+         */
+        private static final int NAME_LENGTH_WARNING = 4;
 
         /**
          * Constructor for this descriptor.
