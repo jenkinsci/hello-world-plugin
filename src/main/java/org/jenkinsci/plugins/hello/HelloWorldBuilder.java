@@ -137,9 +137,9 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          * @return
          *      outcome of the validation. This is sent to the browser.
          *      <p>
-         *      Note that returning {@link FormValidation#error(String)} does not
-         *      prevent the form from being saved. It just means that a message
-         *      will be displayed to the user.
+         *      Returning {@link FormValidation#error(String)} does
+         *      not prevent the form from being saved. It just means
+         *      that a message will be displayed to the user.
          * @throws java.io.IOException on input / output error
          * @throws javax.servlet.ServletException on servlet exception
          */
