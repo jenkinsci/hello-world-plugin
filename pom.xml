@@ -25,7 +25,6 @@
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -51,6 +50,13 @@
         </license>
     </licenses>
 
+    <distributionManagement>
+        <site>
+            <id>github-project-site</id>
+            <url>gitsite:git@github.com/jenkinsci/hello-world-plugin</url>
+        </site>
+    </distributionManagement>
+
     <!-- If you want this to appear on the wiki page:
     <developers>
         <developer>
@@ -73,7 +79,6 @@
         <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
     </scm>
     -->
-
     <properties>
         <!-- Baseline Jenkins version you use to build the plugin. Users must have this version or newer to run. -->
         <jenkins.version>2.60.3</jenkins.version>
@@ -91,20 +96,12 @@
             <url>https://repo.jenkins-ci.org/public/</url>
         </repository>
     </repositories>
-
     <pluginRepositories>
         <pluginRepository>
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
-
-    <distributionManagement>
-        <site>
-            <id>github-project-site</id>
-            <url>gitsite:git@github.com/jenkinsci/hello-world-plugin</url>
-        </site>
-    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -155,5 +152,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>
