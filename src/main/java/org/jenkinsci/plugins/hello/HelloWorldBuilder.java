@@ -1,7 +1,6 @@
 package org.jenkinsci.plugins.hello;
 
 import java.io.IOException;
-import java.io.IOException;
 import javax.servlet.ServletException;
 
 import net.sf.json.JSONObject;
@@ -9,9 +8,6 @@ import net.sf.json.JSONObject;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
-import hudson.model.Build;
-import hudson.model.BuildListener;
-import hudson.model.Descriptor;
 import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.tasks.BuildStepDescriptor;
@@ -35,12 +31,14 @@ import org.kohsuke.stapler.StaplerRequest;
  *
  * <p>
  * When a build is performed, the
- * {@link #perform(Build, Launcher, BuildListener)} method will be invoked.
+ * {@link #perform(Run, FilePath, Launcher, TaskListener)} method will
+ * be invoked.
  *
  * @author Kohsuke Kawaguchi
  */
 public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
+    /** Name to be displayed by the 'Say hello world' build step. */
     private final String name;
 
     /**
@@ -50,7 +48,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      * @param name name to be greeted in the console log
      */
     @DataBoundConstructor
-    public HelloWorldBuilder(String name) {
+    public HelloWorldBuilder(final String name) {
         this.name = name;
     }
 
@@ -59,16 +57,21 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      *
      * @return name to include in greeting
      */
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
     @Override
-    public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
-        // this is where you 'build' the project
-        // since this is a dummy, we just say 'hello world' and call that a build
+    public final void perform(final Run<?, ?> run,
+                              final FilePath workspace,
+                              final Launcher launcher,
+                              final TaskListener listener)
+        throws InterruptedException, IOException {
+        // this is where you 'build' the project since this is a
+        // dummy, we just say 'hello world' and call that a build
 
-        // this also shows how you can consult the global configuration of the builder
+        // this also shows how you can consult the global
+        // configuration of the builder
         if (getDescriptor().useFrench()) {
             listener.getLogger().println("Bonjour, " + name + "!");
         } else {
@@ -78,7 +81,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
     /**
      * Jenkins defines a method {@link Builder#getDescriptor()}, which returns
-     * the corresponding {@link Descriptor} object.
+     * the corresponding {@link hudson.model.Descriptor} object.
      *
      * Since we know that it's actually {@link DescriptorImpl}, override the
      * method and give a better return type, so that we can access
@@ -89,7 +92,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      * @return descriptor for this builder
      */
     @Override
-    public DescriptorImpl getDescriptor() {
+    public final DescriptorImpl getDescriptor() {
         // see Descriptor javadoc for more about what a descriptor is.
         return (DescriptorImpl) super.getDescriptor();
     }
@@ -100,13 +103,15 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      *
      * <p>
      * See
-     * <tt>src/main/resources/org/jenkinsci/plugins/hello/HelloWorldBuilder/*.jelly</tt>
-     * for the actual HTML fragment for the configuration screen.
+     * src/main/resources/org/jenkinsci/plugins/hello/HelloWorldBuilder/
+     * for the actual HTML fragments for the configuration screen.
      */
-    // this annotation tells Jenkins that this is the implementation of an extension point
+    // @Extension annotation identifies this uses an extension point
+    // @Symbol annotation registers a symbol with pipeline
     @Extension
     @Symbol("helloWorld")
-    public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
+    public static final class DescriptorImpl
+        extends BuildStepDescriptor<Builder> {
 
         /**
          * To persist global configuration information, simply store it in a
@@ -117,6 +122,13 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          */
         private boolean useFrench;
 
+        /** Warn if user provided name is shorter than NAME_LENGTH_WARNING.
+         */
+        private static final int NAME_LENGTH_WARNING = 4;
+
+        /**
+         * Constructor for this descriptor.
+         */
         public DescriptorImpl() {
             load();
         }
@@ -127,20 +139,22 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          * @param value
          *      This parameter receives the value that the user has typed.
          * @return
-         *      Indicates the outcome of the validation. This is sent to the browser.
+         *      outcome of the validation. This is sent to the browser.
          *      <p>
-         *      Note that returning {@link FormValidation#error(String)} does not
-         *      prevent the form from being saved. It just means that a message
-         *      will be displayed to the user.
+         *      Returning {@link FormValidation#error(String)} does
+         *      not prevent the form from being saved. It just means
+         *      that a message will be displayed to the user.
          * @throws java.io.IOException on input / output error
          * @throws javax.servlet.ServletException on servlet exception
          */
-        public FormValidation doCheckName(@QueryParameter String value)
+        public FormValidation doCheckName(@QueryParameter final String value)
                 throws IOException, ServletException {
-            if (value.length() == 0)
+            if (value.length() == 0) {
                 return FormValidation.error("Please set a name");
-            if (value.length() < 4)
+            }
+            if (value.length() < NAME_LENGTH_WARNING) {
                 return FormValidation.warning("Isn't the name too short?");
+            }
             return FormValidation.ok();
         }
 
@@ -162,12 +176,14 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
          * type
          */
         @Override
-        public boolean isApplicable(Class type) {
+        public boolean isApplicable(final Class type) {
             return true;
         }
 
         @Override
-        public boolean configure(StaplerRequest staplerRequest, JSONObject json) throws FormException {
+        public boolean configure(final StaplerRequest staplerRequest,
+                                 final JSONObject json)
+            throws FormException {
             // to persist global configuration information,
             // set that to properties and call save().
             useFrench = json.getBoolean("useFrench");
@@ -185,8 +201,12 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
             return useFrench;
         }
 
-        /* Intentionally package protected for testing */
-        void setUseFrench(boolean value) {
+        /**
+         * Global configuration to force output in French.
+         *  Intentionally package protected for testing.
+         * @param value true if output should be French
+         */
+        void setUseFrench(final boolean value) {
             useFrench = value;
         }
     }
