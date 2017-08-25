@@ -39,6 +39,7 @@ import org.kohsuke.stapler.StaplerRequest;
  */
 public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
+    /** Name to be displayed by the 'Say hello world' build step. */
     private final String name;
 
     /**
