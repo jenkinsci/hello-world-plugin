@@ -103,7 +103,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
      *
      * <p>
      * See
-     * <tt>src/main/resources/org/jenkinsci/plugins/hello/HelloWorldBuilder/</tt>
+     * src/main/resources/org/jenkinsci/plugins/hello/HelloWorldBuilder/
      * for the actual HTML fragments for the configuration screen.
      */
     // @Extension annotation identifies this is an extension point implementation
