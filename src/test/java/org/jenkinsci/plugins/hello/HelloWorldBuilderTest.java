@@ -133,17 +133,19 @@ public class HelloWorldBuilderTest {
         jenkins.assertEqualDataBoundBeans(builder, after);
     }
 
-    /* Confirm job configuration is unharmed by a round trip through UI */
+    /* Confirm system configuration is unharmed by a round trip through UI */
     @Test
     public void testSystemConfigRoundTrip() throws Exception {
         jenkins.configRoundtrip();
     }
 
+    /* Confirm default system configuration does not use French */
     @Test
     public void testSystemConfigDefault() throws Exception {
         assertThat(builder.getDescriptor().useFrench(), is(false));
     }
 
+    /* Confirm modified system configuration is unharmed by a round trip through UI */
     @Test
     public void testSystemConfigFrenchRoundTrip() throws Exception {
         builder.getDescriptor().setUseFrench(true);
