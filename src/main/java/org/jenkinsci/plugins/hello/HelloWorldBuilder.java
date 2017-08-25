@@ -201,8 +201,12 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
             return useFrench;
         }
 
-        /* Intentionally package protected for testing */
-        void setUseFrench(boolean value) {
+        /**
+         * Global configuration to force output in French.
+         *  Intentionally package protected for testing.
+         * @param value true if output should be French
+         */
+        void setUseFrench(final boolean value) {
             useFrench = value;
         }
     }
