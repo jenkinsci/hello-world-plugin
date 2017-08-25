@@ -181,7 +181,9 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         }
 
         @Override
-        public boolean configure(StaplerRequest staplerRequest, JSONObject json) throws FormException {
+        public boolean configure(final StaplerRequest staplerRequest,
+                                 final JSONObject json)
+            throws FormException {
             // to persist global configuration information,
             // set that to properties and call save().
             useFrench = json.getBoolean("useFrench");
