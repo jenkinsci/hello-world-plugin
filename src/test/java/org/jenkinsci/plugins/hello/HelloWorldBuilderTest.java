@@ -1,5 +1,3 @@
-package org.jenkinsci.plugins.hello;
-
 /*
  * The MIT License
  *
@@ -23,6 +21,8 @@ package org.jenkinsci.plugins.hello;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+package org.jenkinsci.plugins.hello;
 
 import hudson.model.FreeStyleBuild;
 import hudson.model.FreeStyleProject;
