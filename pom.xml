@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
   The MIT License
@@ -24,75 +24,161 @@
   THE SOFTWARE.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jenkins-ci.plugins</groupId>
+        <artifactId>plugin</artifactId>
+        <version>2.33</version>
+        <relativePath/>
+    </parent>
 
-  <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
-    <artifactId>plugin</artifactId>
-    <version>2.2</version>
-  </parent>
+    <artifactId>hello-world</artifactId>
+    <version>2.1-SNAPSHOT</version>
+    <packaging>hpi</packaging>
 
-  <artifactId>hello-world</artifactId>
-  <version>2.1-SNAPSHOT</version>
-  <packaging>hpi</packaging>
+    <name>Hello World Example Plugin</name>
+    <description>Jenkins World 2017 Intro Plugin</description>
+    <url>http://wiki.jenkins-ci.org/display/JENKINS/Hello+World+Plugin</url>
+    <!-- The default licence for Jenkins OSS Plugins is MIT. Substitute for the applicable one if needed. -->
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
 
-  <name>Hello World Example Plugin</name>
-  <url>http://wiki.jenkins-ci.org/display/JENKINS/Hello+World+Plugin</url>
+    <distributionManagement>
+        <site>
+            <id>github-project-site</id>
+            <url>gitsite:git@github.com/jenkinsci/hello-world-plugin</url>
+        </site>
+    </distributionManagement>
 
-  <licenses>
-    <license>
-      <name>The MIT license</name>
-      <url>https://github.com/jenkinsci/hello-world-plugin/raw/master/LICENSE.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+    <!-- If you want this to appear on the wiki page:
+    <developers>
+        <developer>
+            <id>kohsuke</id>
+            <name>Kohsuke Kawaguchi</name>
+            <email>kk@kohsuke.org</email>
+        </developer>
+        <developer>
+            <id>jieryn</id>
+            <name>Jesse Farinacci</name>
+            <email>jieryn@gmail.com</email>
+        </developer>
+    </developers>
+    -->
 
-  <developers>
-    <developer>
-      <id>kohsuke</id>
-      <name>Kohsuke Kawaguchi</name>
-      <email>kk@kohsuke.org</email>
-    </developer>
-    <developer>
-      <id>jieryn</id>
-      <name>Jesse Farinacci</name>
-      <email>jieryn@gmail.com</email>
-    </developer>
-  </developers>
+    <!-- Assuming you want to host on @jenkinsci:
+    <scm>
+        <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+    </scm>
+    -->
+    <properties>
+        <!-- Baseline Jenkins version you use to build the plugin. Users must have this version or newer to run. -->
+        <jenkins.version>2.60.3</jenkins.version>
+        <java.level>8</java.level>
+        <!-- Other properties you may want to use:
+             ~ jenkins-test-harness.version: Jenkins Test Harness version you use to test the plugin. For Jenkins version >= 1.580.1 use JTH 2.0 or higher.
+             ~ hpi-plugin.version: The HPI Maven Plugin version used by the plugin..
+             ~ stapler-plugin.version: The Stapler Maven plugin version required by the plugin.
+        -->
+         <checkstyle.config.location>sun_checks.xml</checkstyle.config.location>
+         <checkstyle.suppressions.location>config/checkstyle-suppressions.xml</checkstyle.suppressions.location>
+    </properties>
 
-  <scm>
-    <connection>scm:git:git://github.com/jenkinsci/hello-world-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jenkinsci/hello-world-plugin.git</developerConnection>
-    <url>https://github.com/jenkinsci/hello-world-plugin</url>
-    <tag>HEAD</tag>
-  </scm>
+    <repositories>
+        <repository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
-  <repositories>
-    <repository>
-      <id>repo.jenkins-ci.org</id>
-      <url>http://repo.jenkins-ci.org/public/</url>
-    </repository>
-  </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>structs</artifactId>
+            <version>1.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-job</artifactId>
+            <version>2.12.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-cps</artifactId>
+            <version>2.39</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-support</artifactId>
+            <version>2.14</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-basic-steps</artifactId>
+            <version>2.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-durable-task-step</artifactId>
+            <version>2.13</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-api</artifactId>
+            <version>2.20</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-step-api</artifactId>
+            <version>2.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>repo.jenkins-ci.org</id>
-      <url>http://repo.jenkins-ci.org/public/</url>
-    </pluginRepository>
-  </pluginRepositories>
-
-  <distributionManagement>
-    <site>
-      <id>github-project-site</id>
-      <url>gitsite:git@github.com/jenkinsci/hello-world-plugin</url>
-    </site>
-  </distributionManagement>
-
-  <properties>
-    <jenkins.version>1.580.1</jenkins.version>
-    <java.level>6</java.level>
-  </properties>
-
+    <build>
+        <plugins>
+            <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-checkstyle-plugin</artifactId>
+                 <version>2.17</version>
+                 <configuration>
+                     <consoleOutput>true</consoleOutput>
+                     <encoding>UTF-8</encoding>
+                     <failOnViolation>true</failOnViolation>
+                     <failsOnError>true</failsOnError>
+                     <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                     <linkXRef>false</linkXRef>
+                 </configuration>
+                 <executions>
+                     <execution>
+                         <id>checkstyle-compile</id>
+                         <phase>compile</phase>
+                         <goals>
+                             <goal>check</goal>
+                         </goals>
+                     </execution>
+                 </executions>
+             </plugin>
+        </plugins>
+    </build>
 </project>
