@@ -89,6 +89,7 @@
              ~ stapler-plugin.version: The Stapler Maven plugin version required by the plugin.
         -->
          <checkstyle.config.location>sun_checks.xml</checkstyle.config.location>
+         <checkstyle.skip>true</checkstyle.skip>
          <checkstyle.suppressions.location>config/checkstyle-suppressions.xml</checkstyle.suppressions.location>
     </properties>
 
